@@ -87,7 +87,7 @@ const TodolistSave = ({CloseTodoListSave,setFirstTodolist,setSecondTodolist,setT
 
     const handleSumit = (e)=>{
         e.preventDefault();
-        fetch(`http://localhost:3001/data/1`,{
+        fetch(`http://localhost:3001/data/0`,{
             method : "PATCH",
             body : JSON.stringify({
                 title: ChangeTitle,

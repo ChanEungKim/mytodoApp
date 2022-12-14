@@ -84,7 +84,7 @@ const TodoList = ({CloseTodoList , FirstTodolist , SecondTodolist , ThirdTodolis
 
     const handleDeleteClick = (e)=>{ // DELETE를 사용하면 id가 담긴 객체 자체가 사라져서 Patch사용
         e.preventDefault();
-        fetch(`http://localhost:3001/data/1`,{
+        fetch(`http://localhost:3001/data/0`,{
             method : "PATCH",
             body : JSON.stringify({
                 title: '',

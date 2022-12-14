@@ -4,7 +4,10 @@ import optionImg from './../img/option.png'
 import TodoList from "./TodoList";
 import { useState, useEffect } from "react";
 import Contents from "./Contents";
+import calendarImg from './../img/calendar.png'
+import CurClock from 'react-live-clock';
 
+import backImg from "./../img/back.png";
 
 
 const Planer = styled.div`
@@ -56,6 +59,10 @@ const Calendar = styled.div`
     border: 1px solid #F6EDED;
     border-radius: 15px;
 `
+const CalendarImg = styled.img`
+    width: 240px;
+    height: 280px;
+`
 const Containerlistcalendar = styled.div`
     display: flex;
     justify-content: center;
@@ -90,6 +97,69 @@ const ListContainer = styled.div`
     justify-content: center;
 `
 
+const CONTENTS = styled.div`
+    width: 500px;
+    height: 600px;
+    background-color: #B6D0F8;
+    border: 1px solid #B6D0F8;
+    border-radius: 20px;
+    display: grid;
+    justify-content: center;
+`
+const Contentscontainer = styled.div`
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    background-color:rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+const HeaderText = styled.div`
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 500px;
+    height: 80px;
+`
+const TextContentContainer = styled.div`
+    background-color: white;
+    width: 400px;
+    height: 470px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
+const TextContents = styled.div`
+    font-size: 20px;
+    width: 350px;
+    height: 400px;
+`
+
+const BackImage = styled.img`
+    width: 30px;
+    height: 30px;
+`
+const BackImageContainer = styled.div`
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+`
+const TextImageContainer = styled.div`
+    width: 400px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+`
 
 const MainPlaner = ()=>{
     const [TodoListOpen,setTodoList] = useState(false);
@@ -102,7 +172,12 @@ const MainPlaner = ()=>{
     const [SecondContents, setSecondContents] = useState('');
     const [ThirdContents, setThirdContents] = useState('');
     const [FourthContents, setFourthContents] = useState('');
-
+    const [todo, setTodo] = useState([]);
+    const [detail, setDetail] = useState(
+        {
+            title: '', 
+            contents: ''
+        });
 
 
     const ShowTodoList = () =>{
@@ -111,8 +186,16 @@ const MainPlaner = ()=>{
     const CloseTodoList = () =>{
         setTodoList(false)
     }
-    const ShowContents = () =>{
-        setContents(true)
+    const ShowContents = (item) =>{
+        console.log('start', item);
+        // setDetail(
+        //     {
+        //         title: item.title,
+        //         contents: item.contents
+        //     }
+        // );
+        setDetail(item);
+        setContents(true);
     }
     const Closecontent = () =>{
         setContents(false);
@@ -133,9 +216,22 @@ const MainPlaner = ()=>{
             setThirdContents(myJson[2].contents)
             setFourthContents(myJson[3].contents)
 
+            console.log('myJson', myJson)
+            
+            setTodo(myJson);
         })
     },[])
 
+    const todoComponent = () => {
+        console.log('todotodo', todo);
+        return (
+            todo.length > 0 && todo.map((item, index) => {
+                if (index < 4) {
+                    return <List onClick={() => ShowContents(item)}>{item.title}</List>
+                }
+            })
+        )
+    }
 
 
     return (
@@ -143,43 +239,52 @@ const MainPlaner = ()=>{
             <Planer>
                 <HeaderContainer>
                     <Today>Today</Today>
-                    <Today>2022</Today>
+                    <Today>
+                        {/* <CurClock format={"YYYY"}
+                            ticking={false}
+                            timezone={"KR/Pacific"}>
+                        </CurClock>
+                        <CurClock
+                            format={"MMMM"} 
+                            ticking={false} 
+                            timezone={"KR/Pacific"}>
+                        </CurClock> */}
+                    </Today>
                 </HeaderContainer>
                 <ClockContainer>
-                    <Clock>24 : 00 : 00</Clock>
+                    <Clock>
+                        {/* <CurClock format={'HH:mm:ss'} ticking={true} timezone={'KR/Pacific'}></CurClock> */}
+                    </Clock>
                 </ClockContainer>
                 <Containerlistcalendar>
                         <Todolist>
                             <TodolistOptionContainer>
                                 <div>TODO LIST</div>
                                 <OptionImage src={optionImg} alt="img" onClick={ShowTodoList}></OptionImage>
-                                {TodoListOpen && <TodoList 
-                                CloseTodoList={CloseTodoList} 
-                                FirstTodolist={FirstTodolist} 
-                                SecondTodolist={SecondTodolist} 
-                                ThirdTodolist={ThirdTodolist} 
-                                FourthTodolist={FourthTodolist}
-                                setFirstTodolist={setFirstTodolist} 
-                                setSecondTodolist={setSecondTodolist} 
-                                setThirdTodolist={setThirdTodolist} 
-                                setFourthTodolist={setFourthTodolist}
-                                />}
+                                        {TodoListOpen && <TodoList 
+                                        CloseTodoList={CloseTodoList} 
+                                        FirstTodolist={FirstTodolist} 
+                                        SecondTodolist={SecondTodolist} 
+                                        ThirdTodolist={ThirdTodolist} 
+                                        FourthTodolist={FourthTodolist}
+                                        setFirstTodolist={setFirstTodolist} 
+                                        setSecondTodolist={setSecondTodolist} 
+                                        setThirdTodolist={setThirdTodolist} 
+                                        setFourthTodolist={setFourthTodolist}
+                                        />}
                             </TodolistOptionContainer>
                             <ListContainer>
-                                <List onClick={ShowContents}>{FirstTodolist}</List>
-                                   {ContentsOpen && <Contents
-                                    FirstContents={FirstContents} 
-                                    SecondContents={SecondContents} 
-                                    ThirdContents={ThirdContents} 
-                                    FourthContents={FourthContents}
+                                {console.log('todo', todo)}
+                                {todoComponent()}
+                                {ContentsOpen && <Contents
                                     Closecontent={Closecontent}
-                                    />}
-                                <List>{SecondTodolist}</List>
-                                <List>{ThirdTodolist}</List>
-                                <List>{FourthTodolist}</List>
+                                    detail={detail}
+                                />}
                             </ListContainer>
                         </Todolist>
-                    <Calendar></Calendar>
+                    <Calendar>
+                        <CalendarImg src={calendarImg}></CalendarImg>
+                    </Calendar>
                 </Containerlistcalendar>
             </Planer>
         </>

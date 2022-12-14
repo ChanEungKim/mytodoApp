@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import backImg from "./../img/back.png"
+import backImg from "./../img/back.png";
+
 
 const CONTENTS = styled.div`
     width: 500px;
@@ -66,7 +67,7 @@ const TextImageContainer = styled.div`
     justify-content: center;
 `
 
-const Contents = ({Closecontent , FirstContents , SecondContents,  ThirdContents, FourthContents}) =>{
+const Contents = ({Closecontent , detail}) =>{
 
     return (
         <Contentscontainer>
@@ -79,7 +80,7 @@ const Contents = ({Closecontent , FirstContents , SecondContents,  ThirdContents
                 </TextImageContainer>
                 <TextContentContainer>
                     <TextContents>
-                        {FirstContents}
+                        {detail.contents}
                     </TextContents>
                 </TextContentContainer>
             </CONTENTS>
